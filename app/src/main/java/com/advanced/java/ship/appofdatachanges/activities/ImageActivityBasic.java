@@ -22,9 +22,7 @@ public class ImageActivityBasic extends AppCompatActivity {
         Bitmap bitmap = null;
         try {
             bitmap = new DataImageDownloaderTask(imageView, null).execute("images\\Хэллоуин\\PP.SL.003.000415s340x508.jpg").get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
         if(bitmap != null) {

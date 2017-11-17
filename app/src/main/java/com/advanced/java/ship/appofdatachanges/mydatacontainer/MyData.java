@@ -29,12 +29,15 @@ public class MyData implements Parcelable {
         this.cost = cost;
         this.category = category;
         this.state = 0;
-        System.out.println(path);
         path = path.substring(1, path.length() - 1);
-        pathImages = path.split(", ");
-        System.out.println(Arrays.toString(pathImages));
         bitmapsLoaded = new ArrayList<>();
         downloading = false;
+        pathImages = path.split(", ");
+        if(pathImages.length != 0) {
+            System.out.println("construct MyData: " + Arrays.toString(pathImages));
+        } else {
+            System.out.println("construct MyData: " + toString());
+        }
     }
 
     protected MyData(Parcel in) {
@@ -43,7 +46,9 @@ public class MyData implements Parcelable {
         cost = in.readString();
         category = in.readString();
         state = in.readInt();
-        in.readTypedList(bitmapsLoaded, Bitmap.CREATOR);
+        //pathImages = (String[]) in.readArray();
+        bitmapsLoaded = new ArrayList<>();
+        downloading = false;
     }
 
     public void addBitmap(Bitmap bitmap){
@@ -77,6 +82,17 @@ public class MyData implements Parcelable {
         return 0;
     }
 
+
+    /*
+    public int id;
+    public String name;
+    public String cost;
+    public String category;
+    public int state;
+    public String[] pathImages;
+    public ArrayList<Bitmap> bitmapsLoaded;
+    public boolean downloading;
+     */
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(id);
@@ -84,6 +100,8 @@ public class MyData implements Parcelable {
         parcel.writeString(cost);
         parcel.writeString(category);
         parcel.writeInt(state);
-        parcel.writeList(bitmapsLoaded);
+        parcel.writeArray(pathImages);
+        //parcel.writeList(bitmapsLoaded);
+        //parcel.writeValue(downloading);
     }
 }

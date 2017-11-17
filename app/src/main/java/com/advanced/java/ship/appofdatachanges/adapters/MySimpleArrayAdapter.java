@@ -39,6 +39,8 @@ public class MySimpleArrayAdapter extends ArrayAdapter<MyData> {
         this.resource = resource;
     }
 
+
+    // TODO почему-то при скачивании картинки, она постоянно меняется только на первом элементе
     @NonNull
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
