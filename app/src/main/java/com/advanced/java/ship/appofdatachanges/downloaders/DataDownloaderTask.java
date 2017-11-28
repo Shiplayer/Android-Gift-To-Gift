@@ -35,7 +35,7 @@ public class DataDownloaderTask extends AsyncTask<String, Void, List<MyData>> {
                     giftContent = bf.readLine();
                     buf = giftContent.split("\t");
                     giftImages = bf.readLine();
-                    list.add(new MyData(Integer.parseInt(buf[0]), buf[1], buf[5], buf[3], giftImages));
+                    list.add(new MyData(Integer.parseInt(buf[0]), buf[1], buf[5], buf[2], buf[3], giftImages));
 
                 }
             }

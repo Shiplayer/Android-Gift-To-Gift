@@ -1,6 +1,7 @@
 package com.advanced.java.ship.appofdatachanges.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -18,11 +19,14 @@ import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import com.advanced.java.ship.appofdatachanges.R;
+import com.advanced.java.ship.appofdatachanges.ScrollingActivity;
+import com.advanced.java.ship.appofdatachanges.activities.ActivityShowItem;
 import com.advanced.java.ship.appofdatachanges.downloaders.DataDownloaderTask;
 import com.advanced.java.ship.appofdatachanges.downloaders.DataImageDownloaderTasks;
 import com.advanced.java.ship.appofdatachanges.downloaders.ThreadPoolDownloadImage;
 import com.advanced.java.ship.appofdatachanges.mydatacontainer.MyData;
 
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.FilterInputStream;
 import java.io.IOException;
@@ -126,16 +130,30 @@ public class MySimpleArrayAdapter extends ArrayAdapter<MyData> {
         }
         //holder.viewSwitcher.setDisplayedChild(newsItem.state);
 
-        convertView.setOnClickListener(new View.OnClickListener() {
+        convertView.setOnClickListener(view -> {
+            //holder.viewSwitcher.showNext();
+            if(values.get(position).state == 1)
+                values.get(position).state = 0;
+            else
+                values.get(position).state = 1;
+            //holder.viewSwitcher.showNext();
+            //MySimpleArrayAdapter.this.notifyDataSetChanged();
+        });
+        convertView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View view) {
-                //holder.viewSwitcher.showNext();
-                if(values.get(position).state == 1)
-                    values.get(position).state = 0;
-                else
-                    values.get(position).state = 1;
-                //holder.viewSwitcher.showNext();
-                //MySimpleArrayAdapter.this.notifyDataSetChanged();
+            public boolean onLongClick(View view) {
+                Intent intent = new Intent(context, ScrollingActivity.class);
+                intent.putExtra("data", values.get(position));
+                if(values.get(position).bitmapsLoaded.size() > 0) {
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    values.get(position).bitmapsLoaded.get(0).compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    byte[] byteArray = stream.toByteArray();
+                    System.out.println(byteArray.length);
+                    //intent.putExtra("image", byteArray);
+
+                }
+                context.startActivity(intent);
+                return false;
             }
         });
         return convertView;

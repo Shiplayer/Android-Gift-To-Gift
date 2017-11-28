@@ -28,11 +28,11 @@ import java.util.List;
  * Created by Anton on 01.11.2017.
  */
 
-public class DataImageDownloaderTask extends AsyncTask<String, Void, Bitmap> {
+public class DataImageDownloaderTasks extends AsyncTask<String, Void, Bitmap> {
     private final WeakReference<ImageView> imageViewWeakReference;
     private final MyData myDataWeakReference;
 
-    public DataImageDownloaderTask(ImageView imageView, MyData myData){
+    public DataImageDownloaderTasks(ImageView imageView, MyData myData){
         imageViewWeakReference = new WeakReference<>(imageView);
         myDataWeakReference = myData;
     }
@@ -204,7 +204,7 @@ public class DataImageDownloaderTask extends AsyncTask<String, Void, Bitmap> {
         return null;
     }
 
-    private static final class SubStream extends FilterInputStream {
+    public static final class SubStream extends FilterInputStream {
         private final long length;
         private long pos;
 

@@ -1,14 +1,20 @@
 package com.advanced.java.ship.appofdatachanges.activities;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ListView;
 
 import com.advanced.java.ship.appofdatachanges.R;
+import com.advanced.java.ship.appofdatachanges.ScrollingActivity;
 import com.advanced.java.ship.appofdatachanges.adapters.MySimpleArrayAdapter;
 import com.advanced.java.ship.appofdatachanges.downloaders.DataDownloaderTask;
 import com.advanced.java.ship.appofdatachanges.mydatacontainer.MyData;
@@ -26,11 +32,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         ListView listView = (ListView) findViewById(R.id.list_view);
         if(savedInstanceState == null) {
             myDataList = new ArrayList<>();
             try {
-                myDataList = new DataDownloaderTask().execute("get 1 100").get();
+                myDataList = new DataDownloaderTask().execute("get 1 20").get();
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
@@ -39,8 +46,36 @@ public class MainActivity extends AppCompatActivity {
             myDataList = savedInstanceState.getParcelableArrayList(STATE_MY_DATA_LIST);
         }
 
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setCustomView(R.layout.actionbar_view);
+            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
+                    | ActionBar.DISPLAY_SHOW_HOME);
+            //actionBar.setDisplayHomeAsUpEnabled(true);
+        } else {
+            Log.e("actionBar", "is null!!");
+        }
+
         assert myDataList != null;
         listView.setAdapter(new MySimpleArrayAdapter(this, R.layout.rowlayout, myDataList));
+        listView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View view, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                Log.d("ScrollView","scrollX_"+scrollX+"_scrollY_"+scrollY+"_oldScrollX_"+oldScrollX+"_oldScrollY_"+oldScrollY);
+            }
+        });
+        listView.getScrollIndicators();
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+                Log.d("onScrollStateChanged","i"+i);
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+                Log.d("onScroll","i " + i + " i1 " + i1 + " i2 " + i2);
+            }
+        });
         /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -51,6 +86,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
         //Button btn = (Button) findViewById(R.id.button2);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onCreateOptionsMenu(menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.action_bar_menu, menu);
+        return true;
     }
 
     @Override
@@ -84,6 +127,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void openActivityWithImage(View view){
         Intent intent = new Intent(this, ImageActivityBasic.class);
+        startActivity(intent);
+    }
+
+    public void openScrollingActivity(View view){
+        Intent intent = new Intent(this, ScrollingActivity.class);
         startActivity(intent);
     }
 

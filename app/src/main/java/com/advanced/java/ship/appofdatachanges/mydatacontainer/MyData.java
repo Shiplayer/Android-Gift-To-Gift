@@ -4,7 +4,10 @@ import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.IntDef;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,21 +16,25 @@ import java.util.List;
  * Created by Anton on 30.10.2017.
  */
 
-public class MyData implements Parcelable {
+public class MyData extends TypeData implements Parcelable {
+
     public int id;
     public String name;
     public String cost;
     public String category;
+    public String description;
     public int state;
     public String[] pathImages;
     public ArrayList<Bitmap> bitmapsLoaded;
     public boolean downloading;
 
-    public MyData(int id, String name, String cost, String category, String path){
+    public MyData(int id, String name, String cost, String description, String category, String path){
+        super(TypeData.ITEM);
         this.id = id;
         this.name = name;
         this.cost = cost;
         this.category = category;
+        this.description = description;
         this.state = 0;
         path = path.substring(1, path.length() - 1);
         bitmapsLoaded = new ArrayList<>();
@@ -40,15 +47,31 @@ public class MyData implements Parcelable {
         }
     }
 
+    public MyData(){
+        super(TypeData.ITEM);
+        this.id = -1;
+        this.name = "error";
+        this.cost = "error";
+        this.category = "error";
+        this.description = "error";
+        this.state = 0;
+        bitmapsLoaded = new ArrayList<>();
+        downloading = false;
+        pathImages = null;
+    }
+
     protected MyData(Parcel in) {
+        super(TypeData.ITEM);
         id = in.readInt();
         name = in.readString();
         cost = in.readString();
         category = in.readString();
+        description = in.readString();
         state = in.readInt();
         //pathImages = (String[]) in.readArray();
         bitmapsLoaded = new ArrayList<>();
-        downloading = false;
+        //bitmapsLoaded.add(in.readParcelable(Bitmap.class.getClassLoader()));
+        downloading = in.readByte() != 0;
     }
 
     public void addBitmap(Bitmap bitmap){
@@ -94,14 +117,17 @@ public class MyData implements Parcelable {
     public boolean downloading;
      */
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
-        parcel.writeString(name);
-        parcel.writeString(cost);
-        parcel.writeString(category);
-        parcel.writeInt(state);
-        parcel.writeArray(pathImages);
-        //parcel.writeList(bitmapsLoaded);
-        //parcel.writeValue(downloading);
+    public void writeToParcel(Parcel parcel, int flag) {
+        parcel.writeInt(id); // id = in.readInt();
+        parcel.writeString(name); // name = in.readString();
+        parcel.writeString(cost); // cost = in.readString();
+        parcel.writeString(category); // category = in.readString();
+        parcel.writeString(description); //description = in.readString();
+        parcel.writeInt(state); //state = in.readInt();
+        parcel.writeArray(pathImages); ////pathImages = (String[]) in.readArray();
+        //parcel.writeParcelable(bitmapsLoaded.get(0), flag);
+        parcel.writeByte((byte) (downloading ? 1 : 0));
+        //parcel.writeList(bitmapsLoaded); bitmapsLoaded = new ArrayList<>();
+        //parcel.writeValue(downloading); downloading = false;
     }
 }

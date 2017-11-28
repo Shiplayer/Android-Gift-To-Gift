@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
 import com.advanced.java.ship.appofdatachanges.R;
-import com.advanced.java.ship.appofdatachanges.downloaders.DataImageDownloaderTask;
+import com.advanced.java.ship.appofdatachanges.downloaders.DataImageDownloaderTasks;
 
 import java.util.concurrent.ExecutionException;
 
@@ -21,7 +21,7 @@ public class ImageActivityBasic extends AppCompatActivity {
         ImageView imageView = (ImageView) findViewById(R.id.image_view_test);
         Bitmap bitmap = null;
         try {
-            bitmap = new DataImageDownloaderTask(imageView, null).execute("images\\Хэллоуин\\PP.SL.003.000415s340x508.jpg").get();
+            bitmap = new DataImageDownloaderTasks(imageView, null).execute("images\\Хэллоуин\\PP.SL.003.000415s340x508.jpg").get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
