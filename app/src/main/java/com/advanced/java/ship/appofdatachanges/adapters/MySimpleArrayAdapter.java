@@ -58,6 +58,7 @@ public class MySimpleArrayAdapter extends ArrayAdapter<MyData> {
         threadPoolExecutor = Executors.newFixedThreadPool(10);
     }
 
+    // TODO сделать переход к товару по одному клику в списке
 
     // TODO почему-то при скачивании картинки, она постоянно меняется только на первом элементе
     @NonNull
@@ -199,76 +200,6 @@ public class MySimpleArrayAdapter extends ArrayAdapter<MyData> {
                     try (InputStream imageData = new SubStream(inputStream, size)) {
                         bitmap = BitmapFactory.decodeStream(imageData);
                     }
-            /*BufferedImage bufferedImage = ImageIO.read(inputStream);
-            System.out.println(bufferedImage.getHeight() + " " + bufferedImage.getWidth());
-
-            */
-
-
-                /*count = inputStream.read(countBytes);
-                int x = ByteBuffer.wrap(countBytes).getInt();
-                //inputStream.read
-                int value = ((countBytes[0] & 0xFF) << 24) | ((countBytes[1] & 0xFF) << 16)
-                        | ((countBytes[2] & 0xFF) << 8) | (countBytes[3] & 0xFF);
-                System.out.println(x + " " + count + " " + value);
-                byte[] bytes = new byte[count];
-                int len = inputStream.read(bytes, 0, count);
-                System.out.println(x + " " + value);
-
-                bytes = new byte[value];
-                count = 0;
-                int off = 0;
-
-                System.out.println("available" + inputStream.available());
-                while((off = inputStream.read(bytes)) != -1){
-                    count += off;
-                    System.out.println("while: " + off);
-                    System.out.println("available while: " + inputStream.available());
-                }*/
-
-                /*while((off = inputStream.read(bytes, count, bytes.length - count - 1)) != 0){
-                    count += off;
-                    System.out.println("while: " + count);
-                }*/
-                    //count += inputStream.read(bytes, count, bytes.length);
-                /*System.err.println("count: " + bytes.length);
-
-
-
-                //bitmaps.add(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
-                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                Bitmap mutableBitmap = bmp.copy(Bitmap.Config.ARGB_8888, true);
-                System.out.println(mutableBitmap.getWidth() + " " + mutableBitmap.getHeight());
-                */
-
-
-                /*byte[] sizeBytes = new byte[Long.BYTES];
-                inputStream.read(sizeBytes);
-                long value = getLongFromBytes(sizeBytes);
-                System.out.println("value = " + value);
-                int bytesSize = 4096;
-                byte[] bytes = new byte[bytesSize];
-                int total = 0, offset = 0;
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                count = 0;
-                int len = bytesSize;
-                while((count = inputStream.read(bytes, offset, len - offset)) != -1){
-                    System.out.println("count = " + count);
-                    if(count + offset < bytesSize){
-                        offset = count;
-                        System.out.println("info = " + count + " " + total);
-                    } else {
-                        offset = 0;
-                    }
-                    total += count;
-                    System.out.println("total = " + total);
-                    byteArrayOutputStream.write(bytes, 0, count);
-                    System.out.println(len - offset);
-
-                }
-                byte[] bitmapBytes = byteArrayOutputStream.toByteArray();
-                System.out.println("byteArrayOutputStream.toByteArray().length = [" + byteArrayOutputStream.toByteArray().length + "]");
-                bitmap = BitmapFactory.decodeByteArray(bitmapBytes, 0, bitmapBytes.length);*/
                     System.out.println("time: " + (System.currentTimeMillis() - time));
                     System.out.println("doInBackground done: " + System.currentTimeMillis());
                     return bitmap;
@@ -277,10 +208,7 @@ public class MySimpleArrayAdapter extends ArrayAdapter<MyData> {
                     e.printStackTrace();
                 }
                 System.out.println("AsyncTask:" + link);
-                //bitmaps.add(downloadBitmap(link));
             }
-            //System.out.println(bitmaps.isEmpty() + " " + bitmaps.size() + " " + bitmaps.get(0).getHeight() + "x" + bitmaps.get(0).getWidth());
-            //imageViewWeakReference.get().setImageBitmap(bitmaps.get(0));
             return null;
         }
 
@@ -317,32 +245,6 @@ public class MySimpleArrayAdapter extends ArrayAdapter<MyData> {
         }
 
         private Bitmap downloadBitmap(String link) {
-        /*MyData myData = myDataWeakReference.get();
-        System.out.println(myData);
-        try (Socket socket = new Socket("192.168.1.13", 44579);
-             ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-             PrintWriter pw = new PrintWriter(socket.getOutputStream(), true)) {
-            System.out.println("getImage");
-            String giftImages = "";
-
-            String[] buf;
-            pw.println("getImage " + link);
-
-            int count = inputStream.readInt();
-            byte[] bytes = new byte[count];
-            int len = inputStream.read(bytes);
-            if(count != len){
-                System.err.println(count + " != " + len);
-            }
-            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-            myData.addBitmap(bitmap);
-
-            return bitmap;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        System.err.println("error");*/
 
             return null;
         }

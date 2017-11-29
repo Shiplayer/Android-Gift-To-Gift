@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
@@ -48,10 +49,13 @@ public class MainActivity extends AppCompatActivity {
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setCustomView(R.layout.actionbar_view);
-            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
-                    | ActionBar.DISPLAY_SHOW_HOME);
+            //actionBar.setCustomView(R.layout.actionbar_view);
+            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME);
+            //actionBar.setDisplayShowHomeEnabled(true);
             //actionBar.setDisplayHomeAsUpEnabled(true);
+            //actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+
         } else {
             Log.e("actionBar", "is null!!");
         }
@@ -94,6 +98,12 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.action_bar_menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.w("warning", item.getItemId() + " vs " + android.R.id.home);
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

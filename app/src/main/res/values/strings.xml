@@ -168,4 +168,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+    <string name="name_item">name item</string>
+    <string name="cost_item">cost item</string>
+    <string name="category_item">category item</string>
 </resources>
