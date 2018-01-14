@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+[images\Символы года 2018\PP.DG.064.001965s340x508.jpg, images\Символы года 2018\PP.DG.064.001965as340x508.jpg], 25112	Подушка новогодняя с Вашим именем «Пёсик»	Подушка декоративная, 35*35см, габардин, с нанесением персонального текста	Символы года 2018	/simvoly-goda/podushka-dekorativnaya-s-vashim-imenem-pesik-PP.SL.017.001978/	880.0	PP.SL.017.001978
+[images\Символы года 2018\PP.SL.017.001978s340x508.jpg, images\Символы года 2018\PP.SL.017.001978as340x508.jpg], 25113	Набор салфеток с Вашим текстом «Лапка»	Набор салфеток сервир. 2-предм., 35*50см, бязь, с нанесением текста	Символы года 2018	/simvoly-goda/nabor-salfetok-s-vashim-tekstom-lapka-PP.SL.029.001987/	1850.0	PP.SL.029.001987
+[images\Символы года 2018\PP.SL.029.001987s340x508.jpg, images\Символы года 2018\PP.SL.029.001987as340x508.jpg], 25114	Обложка для паспорта «Особо умен»	Материал: искусственная кожа. Размер: 10*14см. Внутри обложки имеются два кармашка.	Символы года 2018	/simvoly-goda/oblozhka-dlya-pasporta-osobo-umen-74.A2.088/	390.0	01399
+[images\Символы года 2018\74.A2.088s340x508.jpg, images\Символы года 2018\74.A2.088as340x508.jpg, images\Символы года 2018\74.A2.088bs340x508.jpg], 25115	Шапка «Дог»	Материал: 100% акрил	Символы года 2018	/simvoly-goda/-dog-72.B3.104/	890.0	46623
+]
+-->
+<resources>
+    <array name="images">
+        <item>@drawable/data_1</item>
+        <item>@drawable/data_2</item>
+        <item>@drawable/data_3</item>
+        <item>@drawable/data_4</item>
+        <item>@drawable/data_5</item>
+        <item>@drawable/data_6</item>
+        <item>@drawable/data_7</item>
+        <item>@drawable/data_8</item>
+    </array>
+    <array name="id">
+        <item>25106</item>
+        <item>25107</item>
+        <item>25108</item>
+        <item>25109</item>
+        <item>25110</item>
+        <item>25111</item>
+        <item>25112</item>
+        <item>25113</item>
+    </array>
+    <array name="name">
+        <item>Печенье новогоднее с предсказанием именное «Пёсик»</item>
+        <item>Игрушка мягконабивная «Добрый песик»</item>
+        <item>Фигурка «Сладкий сон»</item>
+        <item>Елочная игрушка с Вашим текстом «Щенячий восторг»</item>
+        <item>Игрушка мягконабивная «Такса»</item>
+        <item>Шоколад с Вашим именем «Собачки»</item>
+        <item>Подушка новогодняя с Вашим именем «Пёсик»</item>
+        <item>Набор салфеток с Вашим текстом «Лапка»</item>
+    </array>
+    <array name="description">
+        <item>Порадуйте близкого вам человека необычным, а главное вкусным подарком. В каждом печенье можно найти индивидуальное предсказание. В упаковке - 5 шт.</item>
+        <item>22*30см, текстиль, серая.</item>
+        <item>19.5*14*8см, полирезин, серо-коричн.</item>
+        <item>Елочная игрушка с нанесением персонального текста, размер 14см*10,5см, дерево.	</item>
+        <item>34*35см, лайкра, красная.</item>
+        <item>Молочный шоколад с изюмом и орехами в персональной именной упаковке будет приятным сувениром для сладкоежки! Масса - 90г.</item>
+        <item>Подушка декоративная, 35*35см, габардин, с нанесением персонального текста.</item>
+        <item>Набор салфеток сервир. 2-предм., 35*50см, бязь, с нанесением текста</item>
+    </array>
+    <array name="catalog">
+        <item>Символы года 2018</item>
+        <item>Символы года 2018</item>
+        <item>Символы года 2018</item>
+        <item>Символы года 2018</item>
+        <item>Символы года 2018</item>
+        <item>Символы года 2018</item>
+        <item>Символы года 2018</item>
+        <item>Символы года 2018</item>
+    </array>
+    <array name="cost">
+        <item>410.0</item>
+        <item>1199.0</item>
+        <item>1259.0</item>
+        <item>360.0</item>
+        <item>1479.0</item>
+        <item>320.0</item>
+        <item>880.0</item>
+        <item>1850.0</item>
+    </array>
+    <array name="code">
+        <item>PP.DG.011.001978</item>
+        <item>32813</item>
+        <item>01138</item>
+        <item>PP.UF.054.001994</item>
+        <item>23882</item>
+        <item>PP.DG.064.001965</item>
+        <item>PP.SL.017.001978</item>
+        <item>PP.SL.029.001987</item>
+    </array>
+</resources>
