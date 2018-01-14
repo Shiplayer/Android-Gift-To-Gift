@@ -1,9 +1,16 @@
 package com.advanced.java.ship.appofdatachanges.activities;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.os.Parcelable;
 import android.os.PersistableBundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.content.res.TypedArrayUtils;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,21 +19,27 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.advanced.java.ship.appofdatachanges.ActivityWithNavigation;
 import com.advanced.java.ship.appofdatachanges.R;
 import com.advanced.java.ship.appofdatachanges.ScrollingActivity;
 import com.advanced.java.ship.appofdatachanges.adapters.MySimpleArrayAdapter;
+import com.advanced.java.ship.appofdatachanges.downloaders.CategoryDownloaderTask;
 import com.advanced.java.ship.appofdatachanges.downloaders.DataDownloaderTask;
 import com.advanced.java.ship.appofdatachanges.mydatacontainer.MyData;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
     List<MyData> myDataList;
     private static final String STATE_MY_DATA_LIST = "myDataList";
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     // TODO медленно загружается, надо что-то сделать с этим
     @Override
@@ -37,27 +50,47 @@ public class MainActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.list_view);
         if(savedInstanceState == null) {
             myDataList = new ArrayList<>();
-            try {
+            /*try {
+                //TODO как-то избавиться от get, т.к. он тормозит работу приложения
                 myDataList = new DataDownloaderTask().execute("get 1 20").get();
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
-            }
+            }*/
         } else {
             System.out.println("get myDataList from Instance");
             myDataList = savedInstanceState.getParcelableArrayList(STATE_MY_DATA_LIST);
         }
 
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            //actionBar.setCustomView(R.layout.actionbar_view);
-            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME);
-            //actionBar.setDisplayShowHomeEnabled(true);
-            //actionBar.setDisplayHomeAsUpEnabled(true);
-            //actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
+        navigationView.inflateHeaderView(R.layout.layout_navigation_main);
 
-        } else {
-            Log.e("actionBar", "is null!!");
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawerLayout,         /* DrawerLayout object */
+                R.string.drawer_open,  /* "open drawer" description */
+                R.string.drawer_close  /* "close drawer" description */
+        ) {
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getSupportActionBar().setTitle(R.string.app_name);
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getSupportActionBar().setTitle(getResources().getString(R.string.drawer_open));
+            }
+        };
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setHomeButtonEnabled(true);
+
+
+
+        if(myDataList == null || myDataList.isEmpty()){
+            myDataList = getFromResources();
         }
 
         assert myDataList != null;
@@ -90,6 +123,67 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
         //Button btn = (Button) findViewById(R.id.button2);
+        /*try {
+            initializeAllInNavigation();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }*/
+    }
+
+    private void initializeAllInNavigation() throws ExecutionException, InterruptedException {
+
+        ListView NavigationListView = (ListView) findViewById(R.id.navigation_list);
+
+        List<String> listOfString = Arrays.asList(this.getResources().getStringArray(R.array.catalog));//new CategoryDownloaderTask(this).execute("getCategory").get();
+        Log.w("initializeAllIn", String.valueOf(listOfString.size()));
+        ArrayAdapter<String> itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listOfString);
+        Log.w("check itemsAdapter", String.valueOf(NavigationListView == null));
+        NavigationListView.setAdapter(itemsAdapter);
+
+    }
+
+    public List<MyData> getFromResources(){
+        List<MyData> list = new ArrayList<>();
+        @SuppressLint("Recycle") TypedArray images = getResources().obtainTypedArray(R.array.images);
+        @SuppressLint("Recycle") TypedArray id = getResources().obtainTypedArray(R.array.id);
+        @SuppressLint("Recycle") TypedArray name = getResources().obtainTypedArray(R.array.name);
+        @SuppressLint("Recycle") TypedArray description = getResources().obtainTypedArray(R.array.description);
+        @SuppressLint("Recycle") TypedArray catalog = getResources().obtainTypedArray(R.array.catalog);
+        @SuppressLint("Recycle") TypedArray cost = getResources().obtainTypedArray(R.array.cost);
+        @SuppressLint("Recycle") TypedArray code = getResources().obtainTypedArray(R.array.code);
+        if(images.length() == id.length()) {
+            for (int i = 0; i < images.length(); i++){
+                list.add(new MyData(id.getInt(i, -1), name.getString(i), cost.getString(i), description.getString(i), catalog.getString(i), images.getDrawable(i)));
+            }
+        } else  {
+            Log.e("default data", "image.length() != data.length()");
+        }
+        return list;
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Pass the event to ActionBarDrawerToggle, if it returns
+        // true, then it has handled the app icon touch event
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        // Handle your other action bar items...
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -98,12 +192,6 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.action_bar_menu, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Log.w("warning", item.getItemId() + " vs " + android.R.id.home);
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -136,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openActivityWithImage(View view){
-        Intent intent = new Intent(this, ImageActivityBasic.class);
+        Intent intent = new Intent(this, ActivityWithNavigation.class);
         startActivity(intent);
     }
 

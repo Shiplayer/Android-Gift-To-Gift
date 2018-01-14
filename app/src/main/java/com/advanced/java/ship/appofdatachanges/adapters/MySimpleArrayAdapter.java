@@ -93,7 +93,7 @@ public class MySimpleArrayAdapter extends ArrayAdapter<MyData> {
         holder.cost.setText(newsItem.cost);
         holder.category.setText(newsItem.category);
         if(newsItem.bitmapsLoaded.size() != 0){
-            //System.out.println("Show image");
+            System.out.println("Show image");
             holder.imageView.setImageBitmap(newsItem.bitmapsLoaded.get(0));
         } else if(!newsItem.downloading) {
             //System.out.println("Downloading");
@@ -120,7 +120,7 @@ public class MySimpleArrayAdapter extends ArrayAdapter<MyData> {
             notifyDataSetChanged();
         }*/
 
-        if(position - 10 > values.size()){
+        /*if(position - 10 > values.size()){
             try {
                 System.out.println("add new " + values.get(values.size() - 1).id);
                 addAll(new DataDownloaderTask().execute("get " + values.get(values.size() - 1).id + " 100").get());
@@ -128,7 +128,7 @@ public class MySimpleArrayAdapter extends ArrayAdapter<MyData> {
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
         //holder.viewSwitcher.setDisplayedChild(newsItem.state);
 
         convertView.setOnClickListener(view -> {
@@ -153,6 +153,7 @@ public class MySimpleArrayAdapter extends ArrayAdapter<MyData> {
                     //intent.putExtra("image", byteArray);
 
                 }
+                intent.putExtra("position", position);
                 context.startActivity(intent);
                 return false;
             }

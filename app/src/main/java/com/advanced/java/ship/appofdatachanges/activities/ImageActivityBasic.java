@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.advanced.java.ship.appofdatachanges.R;
@@ -17,6 +18,7 @@ public class ImageActivityBasic extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_basic);
+        Log.w("imageActivity", "start");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ImageView imageView = (ImageView) findViewById(R.id.image_view_test);
         Bitmap bitmap = null;
@@ -29,6 +31,7 @@ public class ImageActivityBasic extends AppCompatActivity {
             System.out.println("null");
             imageView.setImageBitmap(bitmap);
         }
+        Log.w("imageActivity", "background");
         imageView.setBackgroundColor(0x00ff0000);
 
     }

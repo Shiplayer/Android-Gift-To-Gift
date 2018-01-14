@@ -1,7 +1,9 @@
 package com.advanced.java.ship.appofdatachanges.downloaders;
 
 import android.os.AsyncTask;
+import android.support.v4.content.res.TypedArrayUtils;
 
+import com.advanced.java.ship.appofdatachanges.R;
 import com.advanced.java.ship.appofdatachanges.mydatacontainer.MyData;
 
 import java.io.BufferedReader;

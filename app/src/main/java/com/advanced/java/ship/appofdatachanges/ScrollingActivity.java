@@ -23,6 +23,7 @@ public class ScrollingActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         MyData data = new MyData();
+        int position = -1;
         Intent intent = getIntent();
         if(intent != null){
             if(intent.hasExtra("data"))
@@ -30,6 +31,10 @@ public class ScrollingActivity extends AppCompatActivity {
             if(intent.hasExtra("image")){
                 byte[] bytes = intent.getByteArrayExtra("image");
                 data.addBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+            }
+            if (intent.hasExtra("position")) {
+                position = intent.getIntExtra("position", -1);
+                data.addBitmapAsDrawable(getResources().obtainTypedArray(R.array.images).getDrawable(position));
             }
         }
 
@@ -42,6 +47,8 @@ public class ScrollingActivity extends AppCompatActivity {
         if(data.bitmapsLoaded.size() > 0) {
             imageView.setImageBitmap(data.bitmapsLoaded.get(0));
         }
+
+        imageView.setImageBitmap(data.bitmapsLoaded.get(0));
         textNameItem.setText(data.name);
         textCostItem.setText(data.cost);
         textCategoryItem.setText(data.category);
@@ -55,6 +62,7 @@ public class ScrollingActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 }

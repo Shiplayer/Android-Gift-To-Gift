@@ -12,6 +12,7 @@ import java.lang.annotation.RetentionPolicy;
 public abstract class TypeData {
     public static final int ITEM = 0;
     public static final int CATEGORY = 1;
+    public static final int DEFAULT = 2;
     public final int type;
 
     TypeData(@Type int type){
@@ -26,7 +27,7 @@ public abstract class TypeData {
         return type;
     }
 
-    @IntDef({ITEM, CATEGORY})
+    @IntDef({ITEM, CATEGORY, DEFAULT})
     @Retention(RetentionPolicy.SOURCE)
     @interface Type{    }
 }
